@@ -1,5 +1,6 @@
 import sys
 from PyQt5.QtWidgets import *
+import math
 
 class Main(QDialog):
     def __init__(self):
@@ -125,8 +126,8 @@ class Main(QDialog):
         
         global number1
         global operation1
-        operation1 = operation
         if(number1 == 0):
+            operation1 = operation
             number1 = float(equation)
             self.equation.setText("")
         else:
@@ -138,8 +139,11 @@ class Main(QDialog):
                 equation = number1 * float(equation)
             elif(operation1 == '/'):
                 equation = number1 / float(equation)
+            elif(operation1 == '%'):
+                equation = number1 % float(equation)       
             self.equation.setText("")
             self.equation.setText(str(equation))
+            operation1 = operation
             number1 = equation
             global clear
             clear = 0
@@ -155,6 +159,8 @@ class Main(QDialog):
             equation = number1 * float(equation)
         elif(operation1 == '/'):
             equation = number1 / float(equation)
+        elif(operation1 == '%'):
+            equation = number1 % float(equation)       
         self.equation.setText("")
         self.equation.setText(str(equation))
         number1 = 0
@@ -171,15 +177,27 @@ class Main(QDialog):
     
     def button_inverse_clicked(self):
         equation = self.equation.text()
+        equation = float(1)/float(equation)
+        self.equation.setText("")
+        self.equation.setText(str(equation))
 
     def button_square_clicked(self):
         equation = self.equation.text()
+        equation = math.pow(float(equation), 2)
+        self.equation.setText("")
+        self.equation.setText(str(equation))
 
     def button_squareroot_clicked(self):
         equation = self.equation.text()
+        equation = math.sqrt(float(equation))
+        self.equation.setText("")
+        self.equation.setText(str(equation))
 
     def button_plus_minus_clicked(self):
         equation = self.equation.text()
+        equation = -float(equation)
+        self.equation.setText("")
+        self.equation.setText(str(equation))
 
 
 if __name__ == '__main__':
