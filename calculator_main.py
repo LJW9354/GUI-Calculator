@@ -106,30 +106,69 @@ class Main(QDialog):
     #################
     ### functions ###
     #################
+    global clear
+    clear = 1
+    global number1
+    number1 = 0
+    global operation1
     def number_button_clicked(self, num):
+        global clear
+        if(clear == 0):
+            self.equation.setText("")
+            clear = 1
         equation = self.equation.text()
         equation += str(num)
         self.equation.setText(equation)
 
     def button_operation_clicked(self, operation):
         equation = self.equation.text()
-        equation += operation
-        self.equation.setText(equation)
+        
+        global number1
+        global operation1
+        operation1 = operation
+        if(number1 == 0):
+            number1 = float(equation)
+            self.equation.setText("")
+        else:
+            if(operation1 == '+'):
+                equation = number1 + float(equation)
+            elif(operation1 == '-'):
+                equation = number1 - float(equation)
+            elif(operation1 == '*'):
+                equation = number1 * float(equation)
+            elif(operation1 == '/'):
+                equation = number1 / float(equation)
+            self.equation.setText("")
+            self.equation.setText(str(equation))
+            number1 = equation
+            global clear
+            clear = 0
 
     def button_equal_clicked(self):
         equation = self.equation.text()
-        solution = eval(equation)
-        self.solution.setText(str(solution))
+        global number1, operation1
+        if(operation1 == '+'):
+            equation = number1 + float(equation)
+        elif(operation1 == '-'):
+            equation = number1 - float(equation)
+        elif(operation1 == '*'):
+            equation = number1 * float(equation)
+        elif(operation1 == '/'):
+            equation = number1 / float(equation)
+        self.equation.setText("")
+        self.equation.setText(str(equation))
+        number1 = 0
+        global clear
+        clear = 0
 
     def button_clear_clicked(self):
         self.equation.setText("")
-        self.solution.setText("")
 
     def button_backspace_clicked(self):
         equation = self.equation.text()
         equation = equation[:-1]
         self.equation.setText(equation)
-
+    
     def button_inverse_clicked(self):
         equation = self.equation.text()
 
